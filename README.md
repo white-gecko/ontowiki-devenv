@@ -26,23 +26,24 @@ Make sure you are in the root directory of your devenv clone and execute the fol
 
     docker-compose up -d
 
-This will start up the following containers in the background (names may vary):
+This will start up the following containers in the background:
 
-- nginx
-- phpserver
-- virtuoso-dev
-- mysql-dev
-- virtuoso-test
-- mysql-test
+- ontowiki-devenv-nginx
+- ontowiki-devenv-phpserver
+- ontowiki-devenv-mysql-test
+- ontowiki-devenv-mysql-dev
+- ontowiki-devenv-virtuoso-test
+- ontowiki-devenv-virtuoso-dev
+
 
 If you want to inspect the logs of one of the containers execute for example:
 
-    docker logs -f devenv_nginx_1
+    docker logs -f ontowiki-devenv-nginx
 
 If you want to stop all containers enter:
 
     docker-compose stop
-  
+
 If you want to also remove the containers execute the following command instead:
 
     docker-compose down
@@ -52,7 +53,7 @@ If you want to also remove the containers execute the following command instead:
     http://<IP-of-Docker-Host>
     # or if configured in /etc/hosts
     http://ontowiki.local
-    
+
 ## Run Tests
 
 ### Unit tests with bundled PHP
@@ -61,7 +62,7 @@ If you want to also remove the containers execute the following command instead:
 
 or
 
-    docker run --rm -v `pwd`/..:/var/www devenv_phpserver /bin/sh -c 'cd /var/www && php vendor/bin/phpunit --testsuite "OntoWiki Unit Tests"'
+    docker run --rm -v `pwd`/..:/var/www ontowiki-devenv/phpserver /bin/sh -c 'cd /var/www && php vendor/bin/phpunit --testsuite "OntoWiki Unit Tests"'
 
 ### Unit tests with other PHP versions
 
@@ -93,7 +94,7 @@ or
 
 or
 
-    docker run --rm -v `pwd`/..:/var/www -e EF_STORE_ADAPTER=virtuoso --link devenv_virtuoso-test_1:virtuoso-test devenv_phpserver /bin/sh -c 'cd /var/www && php vendor/bin/phpunit --testsuite "OntoWiki Virtuoso Integration Tests"'
+    docker run --rm -v `pwd`/..:/var/www -e EF_STORE_ADAPTER=virtuoso --link ontowiki-devenv-virtuoso-test:virtuoso-test --net devenv_default ontowiki-devenv/phpserver /bin/sh -c 'cd /var/www && php vendor/bin/phpunit --testsuite "OntoWiki Virtuoso Integration Tests"'
 
 ### Integration tests with MySQL
 
@@ -101,8 +102,8 @@ or
 
 or
 
-    docker run --rm -v `pwd`/..:/var/www -e EF_STORE_ADAPTER=zenddb --link devenv_mysql-test_1:mysql-test devenv_phpserver /bin/sh -c 'cd /var/www && php vendor/bin/phpunit --testsuite "OntoWiki Virtuoso Integration Tests"'
-    
+    docker run --rm -v `pwd`/..:/var/www -e EF_STORE_ADAPTER=zenddb --link ontowiki-devenv-mysql-test:mysql-test --net devenv_default ontowiki-devenv/phpserver /bin/sh -c 'cd /var/www && php vendor/bin/phpunit --testsuite "OntoWiki Virtuoso Integration Tests"'
+
 ## Tips & Tricks
 
 ### Use `docker-machine` (e.g. on a Mac)
@@ -160,4 +161,3 @@ Build the custom image (provides nginx configuration for OntoWiki):
 Run a container based on that image:
 
     docker run -d --name nginx --link phpserver:phpserver -v `pwd`/..:/var/www -p 80:80 ow_nginx
-    
