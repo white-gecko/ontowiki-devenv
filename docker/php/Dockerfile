@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 
 RUN apt-get update \
- && apt-get install -y libvirtodbc0 \
+ && apt-get install -y libvirtodbc0 raptor-utils \
  && apt-get install -y php5-fpm php5-cli php5-mysql php5-odbc php5-xdebug \
  && apt-get install -y php5-common php5-tidy php5-xsl php5-xmlrpc php5-gd php5-memcache php5-memcached \
  && apt-get clean \
