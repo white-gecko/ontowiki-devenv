@@ -16,9 +16,9 @@ Check the settings of your config files:
 
 If you want you can add something like the following to you `/etc/hosts` file:
 
-    <IP-of-Docker-Host> ontowiki.local
+    <IP-of-Docker-Host> ow.dev
 
-This will make your development setup available via the URL `http://ontowiki.local`.
+This will make your development setup available via the URL `http://ow.dev`.
 
 ## Use the Development Environment
 
@@ -52,7 +52,7 @@ If you want to also remove the containers execute the following command instead:
 
     http://<IP-of-Docker-Host>
     # or if configured in /etc/hosts
-    http://ontowiki.local
+    http://ow.dev
 
 ## Run Tests
 
