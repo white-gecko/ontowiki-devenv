@@ -8,21 +8,6 @@ services:
       SPARQL_UPDATE: "true"
     volumes:
       - /data
-    ports:
-      - "8890:8890"
-      - "1111:1111"
-
-  virtuoso-test:
-    image: tenforce/virtuoso
-    container_name: ontowiki-devenv-virtuoso-test
-    environment:
-      DBA_PASSWORD: owdev
-      SPARQL_UPDATE: "true"
-    volumes:
-      - /data
-    ports:
-      - "8891:8890"
-      - "1112:1111"
 
   mysql-dev:
     image: mysql
@@ -34,21 +19,6 @@ services:
       MYSQL_DATABASE: ontowiki-dev
     volumes:
       - /var/lib/mysql
-    ports:
-      - "3306:3306"
-
-  mysql-test:
-    image: mysql
-    container_name: ontowiki-devenv-mysql-test
-    environment:
-      MYSQL_RANDOM_ROOT_PASSWORD: 1
-      MYSQL_USER: php
-      MYSQL_PASSWORD: owdev
-      MYSQL_DATABASE: ow_TEST
-    volumes:
-      - /var/lib/mysql
-    ports:
-      - "3307:3306"
 
   phpserver:
     build: ./docker/php
@@ -69,4 +39,4 @@ services:
     links:
       - phpserver
     ports:
-      - "80:80"
+      - "8080:80"
