@@ -22,21 +22,24 @@ services:
 
   phpserver:
     build: ./docker/php
-    image: ontowiki-devenv/phpserver
     container_name: ontowiki-devenv-phpserver
-    volumes:
-      - ./..:/var/www
     links:
       - virtuoso-dev
       - mysql-dev
+    volumes_from:
+      - ontowiki
 
   nginx:
     build: ./docker/nginx
     image: ontowiki-devenv/nginx2
     container_name: ontowiki-devenv-nginx
-    volumes:
-      - ./..:/var/www
     links:
       - phpserver
     ports:
       - "8080:80"
+    volumes_from:
+      - ontowiki
+
+  ontowiki:
+    build: ./docker/ontowiki
+    container_name: ontowiki-devenv-ontowiki

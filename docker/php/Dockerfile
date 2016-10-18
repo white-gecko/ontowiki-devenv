@@ -28,4 +28,6 @@ RUN set -ex \
   echo 'Address = virtuoso-test:1111'; \
  } | tee /etc/odbc.ini
 
+RUN rm -rf /var/www/*
+
 CMD ["/usr/local/sbin/php-fpm"]
